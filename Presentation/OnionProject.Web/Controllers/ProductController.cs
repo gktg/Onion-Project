@@ -8,10 +8,10 @@ namespace OnionProject.Web.Controllers
     public class ProductController : ControllerBase
     {
 
-        private readonly IProductReadRepository _productReadRepository;
-        private readonly IProductWriteRepository _productWriteRepository;
+        private readonly ICustomerReadRepository _productReadRepository;
+        private readonly ICustomerWriteRepository _productWriteRepository;
 
-        public ProductController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository)
+        public ProductController(ICustomerReadRepository productReadRepository, ICustomerWriteRepository productWriteRepository)
         {
             _productReadRepository = productReadRepository;
             _productWriteRepository = productWriteRepository;
