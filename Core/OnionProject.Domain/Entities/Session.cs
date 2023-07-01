@@ -9,6 +9,6 @@ namespace OnionProject.Domain.Entities
 {
     public class Session : ResponseBase
     {
-        public Guid SessionId { get; set; }
+        public string SessionId { get; set; }
     }
 }

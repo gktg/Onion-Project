@@ -22,6 +22,12 @@ namespace OnionProject.Persistance.Repositories
 
         public DbSet<T> Table => _context.Set<T>();
 
+        public bool Add(T model)
+        {
+            EntityEntry<T> entityEntry = Table.Add(model);
+
+            return entityEntry.State == EntityState.Added;
+        }
 
         public async Task<bool> AddAysnc(T model)
         {
@@ -60,6 +66,11 @@ namespace OnionProject.Persistance.Repositories
         public async Task<int> SaveAsync()
         {
            return await _context.SaveChangesAsync();
+        }
+
+        public int Save()
+        {
+            return _context.SaveChanges();
         }
 
     }

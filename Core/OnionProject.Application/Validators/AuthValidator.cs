@@ -16,16 +16,22 @@ namespace OnionProject.Application.Validators
         private AuthValidator()
         {
 
-            RuleFor(x => x.Phone)
+            RuleFor(x => x.Email)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Telefon numarası boş olmamalıdır.");
+                .WithMessage("Telefon numarası boş olmamalıdır.")
+                .EmailAddress();
 
 
             RuleFor(x => x.Password)
                 .NotNull()
+                .WithMessage("Şifre boş olmamalıdır.")
                 .NotEmpty()
-                .WithMessage("Şifre boş olmamalıdır.");
+                .WithMessage("Şifre boş olmamalıdır.")
+                .MinimumLength(6)
+                .WithName("Şifre")
+                .MaximumLength(16)
+                .WithName("Şifre");
 
         }
 

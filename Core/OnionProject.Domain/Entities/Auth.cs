@@ -8,9 +8,7 @@ namespace OnionProject.Domain.Entities
 {
     public class Auth
     {
-        public string Phone{ get; set; }
-
-        //public string Email{ get; set; }
+        public string Email{ get; set; }
 
         public string Password{ get; set; }
     }

@@ -4,27 +4,27 @@ using OnionProject.Application.Validators;
 using OnionProject.Domain.Entities;
 using FluentValidation.Results;
 using OnionProject.Infrastructure.Tools;
+using Microsoft.AspNetCore.Authentication;
 
 namespace OnionProject.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : Controller
+    public class UserController : Controller
     {
         private readonly ICustomerReadRepository _customerReadRepository;
         private readonly ICustomerWriteRepository _customerWriteRepository;
 
-        public AuthController(ICustomerReadRepository customerReadRepository, ICustomerWriteRepository customerWriteRepository)
+        public UserController(ICustomerReadRepository customerReadRepository, ICustomerWriteRepository customerWriteRepository)
         {
             _customerReadRepository = customerReadRepository;
             _customerWriteRepository = customerWriteRepository;
         }
 
 
-
         [HttpPost]
-        [Route("Login")]
-        public Session Login(Auth auth)
+        [Route("NewUser")]
+        public Session NewUser(Auth auth)
         {
             Session session = new Session();
 
@@ -36,39 +36,48 @@ namespace OnionProject.Web.Controllers
             {
                 try
                 {
+                    Customer? login = _customerReadRepository.GetWhere(x => x.Email == auth.Email).FirstOrDefault();
 
-                    Customer? login = _customerReadRepository.GetWhere(x=>x.Email == auth.Email && x.Password == HashPass.hashPass(auth.Password)).FirstOrDefault();
-
-                    if (login != null)
+                    if (login == null)
                     {
-                        if (login.IsActive)
-                        {
-                            session.SessionId = Guid.NewGuid().ToString() +"-"+ login.Id.ToString();
-                            session.HasError = false;
+                        string hasspass = HashPass.hashPass(auth.Password);
 
+                        Customer customer = new Customer
+                        {
+                            Password = hasspass,
+                            Email = auth.Email,
+                            IsActive = true,
+                        };
+
+                        _customerWriteRepository.Add(customer);
+                        var newCustomer = _customerWriteRepository.Save();
+
+                        if (newCustomer == 1)
+                        {
+                            var a = RedirectToAction("Login", "Auth", customer);
                             return session;
+
                         }
                         else
                         {
-                            session.Error = new List<string> { "Kullanıcı aktif değil" };
+                            session.Error = new List<string> { "Sistemsel bir hata oluştu, lütfen tekrar deneyiniz " };
                             session.HasError = true;
-                            return session;
 
+                            return session;
                         }
 
                     }
                     else
                     {
-                        session.Error = new List<string> { "Giriş başarısız (Kullanıcı adı veya şifre hatalı)" };
+                        session.Error = new List<string> { "Email ile üyelik bulunmaktadır" };
                         session.HasError = true;
                         return session;
 
                     }
-
-
                 }
                 catch (Exception e)
                 {
+
                     session.Error = new List<string> { e.Message };
                     return session;
                 }
@@ -83,6 +92,9 @@ namespace OnionProject.Web.Controllers
                 return session;
 
             }
+
+
+
 
         }
     }

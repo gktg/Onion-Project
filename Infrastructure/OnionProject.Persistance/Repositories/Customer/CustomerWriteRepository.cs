@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace OnionProject.Persistance.Repositories
 {
-    public class CustomerWriteRepository : WriteRepositroy<Product>, ICustomerWriteRepository
+    public class CustomerWriteRepository : WriteRepositroy<Customer>, ICustomerWriteRepository
     {
         public CustomerWriteRepository(OnionProjectDbContext context) : base(context)
         {
