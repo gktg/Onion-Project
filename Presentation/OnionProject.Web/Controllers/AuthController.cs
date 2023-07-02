@@ -50,7 +50,7 @@ namespace OnionProject.Web.Controllers
                         }
                         else
                         {
-                            session.Error = new List<string> { "Kullanıcı aktif değil" };
+                            session.ErrorList = new List<string> { "Kullanıcı aktif değil" };
                             session.HasError = true;
                             return session;
 
@@ -59,7 +59,7 @@ namespace OnionProject.Web.Controllers
                     }
                     else
                     {
-                        session.Error = new List<string> { "Giriş başarısız (Kullanıcı adı veya şifre hatalı)" };
+                        session.ErrorList = new List<string> { "Giriş başarısız (Kullanıcı adı veya şifre hatalı)" };
                         session.HasError = true;
                         return session;
 
@@ -69,7 +69,7 @@ namespace OnionProject.Web.Controllers
                 }
                 catch (Exception e)
                 {
-                    session.Error = new List<string> { e.Message };
+                    session.ErrorList = new List<string> { e.Message };
                     return session;
                 }
 
@@ -79,7 +79,7 @@ namespace OnionProject.Web.Controllers
                 List<string> errorMesages = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
 
                 session.HasError = true;
-                session.Error = errorMesages;
+                session.ErrorList = errorMesages;
                 return session;
 
             }

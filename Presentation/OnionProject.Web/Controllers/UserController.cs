@@ -54,13 +54,14 @@ namespace OnionProject.Web.Controllers
 
                         if (newCustomer == 1)
                         {
-                            var a = RedirectToAction("Login", "Auth", customer);
+                            session.OkeyList = new List<string> { "Üyeliğiniz başarıyla oluşturulmuştur." };
+                            session.HasError = false;
                             return session;
 
                         }
                         else
                         {
-                            session.Error = new List<string> { "Sistemsel bir hata oluştu, lütfen tekrar deneyiniz " };
+                            session.ErrorList = new List<string> { "Sistemsel bir hata oluştu, lütfen tekrar deneyiniz " };
                             session.HasError = true;
 
                             return session;
@@ -69,7 +70,7 @@ namespace OnionProject.Web.Controllers
                     }
                     else
                     {
-                        session.Error = new List<string> { "Email ile üyelik bulunmaktadır" };
+                        session.ErrorList = new List<string> { "Email ile üyelik bulunmaktadır" };
                         session.HasError = true;
                         return session;
 
@@ -78,7 +79,7 @@ namespace OnionProject.Web.Controllers
                 catch (Exception e)
                 {
 
-                    session.Error = new List<string> { e.Message };
+                    session.ErrorList = new List<string> { e.Message };
                     return session;
                 }
 
@@ -88,7 +89,7 @@ namespace OnionProject.Web.Controllers
                 List<string> errorMesages = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
 
                 session.HasError = true;
-                session.Error = errorMesages;
+                session.ErrorList = errorMesages;
                 return session;
 
             }

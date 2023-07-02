@@ -10,7 +10,8 @@ namespace OnionProject.Domain.Entities.Common
     {
         public bool HasError { get; set; }
 
-        public List<string> Error { get; set; }
+        public List<string> ErrorList { get; set; }
+        public List<string> OkeyList { get; set; }
 
     }
 }

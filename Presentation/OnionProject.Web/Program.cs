@@ -18,17 +18,17 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 
-//if (app.Environment.IsDevelopment())
-//{
-//    using (IServiceScope scope = app.Services.CreateScope())
-//    {
-//        OnionProjectDbContext dbContext = scope.ServiceProvider.GetRequiredService<OnionProjectDbContext>();
-//        dbContext.Database.EnsureDeleted();
-//        dbContext.Database.EnsureCreated();
-//        dbContext.Database.Migrate();
-//        Data(dbContext);
-//    }
-//}
+if (app.Environment.IsDevelopment())
+{
+    using (IServiceScope scope = app.Services.CreateScope())
+    {
+        OnionProjectDbContext dbContext = scope.ServiceProvider.GetRequiredService<OnionProjectDbContext>();
+        dbContext.Database.EnsureDeleted();
+        dbContext.Database.EnsureCreated();
+        dbContext.Database.Migrate();
+        Data(dbContext);
+    }
+}
 
 
 // Configure the HTTP request pipeline.
