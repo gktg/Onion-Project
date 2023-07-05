@@ -23,7 +23,7 @@ namespace OnionProject.Persistance
             configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/OnionProject.Web"));
             configurationManager.AddJsonFile("appsettings.json");
 
-            services.AddDbContext<OnionProjectDbContext>(options => options.UseSqlServer(configurationManager.GetConnectionString("GktgSQL")));
+            services.AddDbContext<OnionProjectDbContext>(options => options.UseSqlServer(configurationManager.GetConnectionString("ArkamnSQL")));
 
 
             services.AddScoped<IProductReadRepository, ProductReadRepository>();

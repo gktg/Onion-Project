@@ -36,9 +36,9 @@ namespace OnionProject.Web.Controllers
             {
                 try
                 {
-                    Customer? login = _customerReadRepository.GetWhere(x => x.Email == auth.Email).FirstOrDefault();
+                    Customer? emailControl = _customerReadRepository.GetWhere(x => x.Email == auth.Email).FirstOrDefault();
 
-                    if (login == null)
+                    if (emailControl == null)
                     {
                         string hasspass = HashPass.hashPass(auth.Password);
 
@@ -54,14 +54,48 @@ namespace OnionProject.Web.Controllers
 
                         if (newCustomer == 1)
                         {
-                            session.OkeyList = new List<string> { "Üyeliğiniz başarıyla oluşturulmuştur." };
+                            session.SuccessList = new List<string> { "Üyeliğiniz başarıyla oluşturulmuştur." };
                             session.HasError = false;
-                            return session;
 
+                            try
+                            {
+
+                                Customer? login = _customerReadRepository.GetWhere(x => x.Email == auth.Email && x.Password == HashPass.hashPass(auth.Password)).FirstOrDefault();
+
+                                if (login != null)
+                                {
+                                    if (login.IsActive)
+                                    {
+                                        session.SessionId = Guid.NewGuid().ToString() + "-" + login.Id.ToString();
+                                        return session;
+                                    }
+                                    else
+                                    {
+                                        session.ErrorList = new List<string> { "Kullanıcı aktif değil" };
+                                        return session;
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    session.ErrorList = new List<string> { "Giriş başarısız (Kullanıcı adı veya şifre hatalı)" };
+                                    session.HasError = true;
+                                    return session;
+
+                                }
+
+
+                            }
+                            catch (Exception e)
+                            {
+                                session.ErrorList = new List<string> { e.Message };
+                                return session;
+                            }
                         }
                         else
                         {
-                            session.ErrorList = new List<string> { "Sistemsel bir hata oluştu, lütfen tekrar deneyiniz " };
+                            session.ErrorList = new List<string> { "Sistemsel bir hata oluştu, lütfen tekrar deneyiniz" };
                             session.HasError = true;
 
                             return session;

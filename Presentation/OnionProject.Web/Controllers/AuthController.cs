@@ -24,7 +24,11 @@ namespace OnionProject.Web.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public Session Login(Auth auth)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Session))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult Login(Auth auth)
         {
             Session session = new Session();
 
@@ -46,13 +50,13 @@ namespace OnionProject.Web.Controllers
                             session.SessionId = Guid.NewGuid().ToString() +"-"+ login.Id.ToString();
                             session.HasError = false;
 
-                            return session;
+                            return Ok(session);
                         }
                         else
                         {
                             session.ErrorList = new List<string> { "Kullanıcı aktif değil" };
                             session.HasError = true;
-                            return session;
+                            return StatusCode(404,session);
 
                         }
 
@@ -61,7 +65,7 @@ namespace OnionProject.Web.Controllers
                     {
                         session.ErrorList = new List<string> { "Giriş başarısız (Kullanıcı adı veya şifre hatalı)" };
                         session.HasError = true;
-                        return session;
+                        return StatusCode(404, session);
 
                     }
 
@@ -70,7 +74,7 @@ namespace OnionProject.Web.Controllers
                 catch (Exception e)
                 {
                     session.ErrorList = new List<string> { e.Message };
-                    return session;
+                    return StatusCode(500,session);
                 }
 
             }
@@ -80,7 +84,7 @@ namespace OnionProject.Web.Controllers
 
                 session.HasError = true;
                 session.ErrorList = errorMesages;
-                return session;
+                return StatusCode(400,session);
 
             }
 

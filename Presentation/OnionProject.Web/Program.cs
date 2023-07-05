@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OnionProject.Domain.Entities;
 using OnionProject.Persistance;
+using OnionProject.Persistance.AppMiddlewares;
 using OnionProject.Persistance.Contexts;
 using System.Data;
 
@@ -16,6 +17,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+
 
 
 if (app.Environment.IsDevelopment())
@@ -42,6 +45,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseAppException();
 app.MapControllers();
 
 app.Run();
