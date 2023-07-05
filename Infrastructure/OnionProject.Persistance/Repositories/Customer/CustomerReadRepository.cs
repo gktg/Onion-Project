@@ -1,5 +1,5 @@
 ﻿using OnionProject.Application.Repositories;
-using OnionProject.Domain.Entities;
+using OnionProject.Domain.Entities.Models;
 using OnionProject.Persistance.Contexts;
 using System;
 using System.Collections.Generic;

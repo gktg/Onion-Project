@@ -5,6 +5,7 @@ using OnionProject.Domain.Entities;
 using FluentValidation.Results;
 using OnionProject.Infrastructure.Tools;
 using Microsoft.AspNetCore.Authentication;
+using OnionProject.Domain.Entities.Models;
 
 namespace OnionProject.Web.Controllers
 {

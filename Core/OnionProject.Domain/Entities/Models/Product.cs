@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnionProject.Domain.Entities
+namespace OnionProject.Domain.Entities.Models
 {
     public class Product : BaseEntity
     {

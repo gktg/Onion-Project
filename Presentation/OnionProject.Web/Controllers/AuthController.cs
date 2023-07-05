@@ -4,6 +4,7 @@ using OnionProject.Application.Validators;
 using OnionProject.Domain.Entities;
 using FluentValidation.Results;
 using OnionProject.Infrastructure.Tools;
+using OnionProject.Domain.Entities.Models;
 
 namespace OnionProject.Web.Controllers
 {

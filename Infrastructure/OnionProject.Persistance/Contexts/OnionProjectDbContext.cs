@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OnionProject.Domain.Entities;
+using OnionProject.Domain.Entities.Models;
 
 namespace OnionProject.Persistance.Contexts
 {

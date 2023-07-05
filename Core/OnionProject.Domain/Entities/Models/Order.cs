@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnionProject.Domain.Entities
+namespace OnionProject.Domain.Entities.Models
 {
     public class Order : BaseEntity
     {
@@ -15,6 +15,6 @@ namespace OnionProject.Domain.Entities
 
         public ICollection<Product> Products { get; set; }
 
-        public Customer Customer { get; set; }     
+        public Customer Customer { get; set; }
     }
 }
